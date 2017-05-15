@@ -10,9 +10,10 @@ PRODUCT_PACKAGES += \
 # Default.prop overrides to get adb working at boot
 ADDITIONAL_DEFAULT_PROPERTIES += \
 	ro.secure=0 \
+	persist.adb.notify=0 \
 	ro.adb.secure=0 \
 	ro.hardware=universal8890 \
 	persist.service.adb.enable=1 \
 	persist.service.debuggable=1 \
-	persist.sys.usb.config=adb \
+	persist.sys.usb.config=mtp,adb \
 	ro.securestorage.support=false
