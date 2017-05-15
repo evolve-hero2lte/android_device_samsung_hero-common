@@ -27,5 +27,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.ril.gprsclass=10 \
 	ro.ril.hsxpa=1 \
 	ro.ril.telephony.mqanelements=6 \
+	ro.ril.enable.amr.wideband=1 \
 	telephony.lteOnGsmDevice=1 \
 	telephony.lteOnCdmaDevice=0
