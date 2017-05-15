@@ -13,4 +13,4 @@ PRODUCT_COPY_FILES += \
 
 
 PRODUCT_PROPERTY_OVERRIDES += \
-	persist.camera.HAL3.enabled=1
+camera.hal1.packagelist=com.skype.raider,com.whatsapp,com.cyworld.camera
