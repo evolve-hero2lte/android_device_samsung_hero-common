@@ -6,3 +6,27 @@ ro.boot.bootdevice=155a0000.ufs
 
 # Google assistant
 ro.opa.eligible_device=true
+
+# Tweaks
+# Better Responsiveness & Speed
+ro.max.fling_velocity=12000
+ro.min.fling_velocity=8000
+#Disable Miscellaneous Android Logging Stuff
+debugtool.anrhistory=0
+profiler.debugmonitor=false
+profiler.launch=false
+profiler.hung.dumpdobugreport=false
+#Disable Kernel Error Checking
+ro.kernel.android.checkjni=0
+ro.kernel.checkjni=0
+#Better signal reception
+persist.cust.tel.eons=1
+#Faster Boot-Animation FPS
+boot.fps=20
+#Saves some battery without reducing performances
+power.saving.mode=1
+ro.ril.disable.power.collapse=0
+ro.ril.power_collapse=1
+power_supply.wakeup=enable
+# Increase jpg quality to 100%
+ro.media.enc.jpeg.quality=100
