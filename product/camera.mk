@@ -1,6 +1,5 @@
 PRODUCT_PACKAGES += \
-	camera.exynos5 \
-  	Snap
+	camera.exynos5
 
 # Permissions
 PRODUCT_COPY_FILES += \
