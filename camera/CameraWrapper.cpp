@@ -70,13 +70,15 @@ static int camera_device_open(const hw_module_t* module, const char* name,
                 hw_device_t** device)
 {
     int rv = -EINVAL;
+	int cameraretry;
 
     if (name != NULL) {
         if (check_vendor_module())
             return -EINVAL;
+	for (cameraretry = 0; cameraretry < 3; cameraretry++) {            
         rv = camera3_device_open(module, name, device);
     }
-
+		}
     return rv;
 }
 
