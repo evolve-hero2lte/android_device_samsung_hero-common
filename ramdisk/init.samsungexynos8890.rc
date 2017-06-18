@@ -5,7 +5,6 @@ import init.wifi.rc
 import init.gps.rc
 import init.samsung.rc
 import init.rilcommon.rc
-# import init.power.rc
 
 on early-init
     mount debugfs /sys/kernel/debug /sys/kernel/debug
@@ -90,6 +89,7 @@ on post-fs-data
     chown system radio /sys/class/camera/rear/fw_update
     chown system radio /sys/class/camera/rear/companion_ic_check
     chown system radio /sys/class/camera/flash/rear_flash
+    chown cameraserver system /sys/class/camera/flash/torch_flash
     chown cameraserver system /sys/class/camera/flash/rear_torch_flash
     chown system radio /sys/class/camera/front/front_camfw
     chown system radio /sys/class/camera/front/front_camfw_full
@@ -192,6 +192,12 @@ on boot
     chmod 0664 /sys/devices/14ac0000.mali/dvfs_min_lock
     chown radio system /sys/devices/14ac0000.mali/dvfs_max_lock
     chmod 0664 /sys/devices/14ac0000.mali/dvfs_max_lock
+
+    chown system system /sys/devices/14ac0000.mali/max_clock
+    chmod 0660 /sys/devices/14ac0000.mali/max_clock
+    chown system system /sys/devices/14ac0000.mali/min_clock
+    chmod 0660 /sys/devices/14ac0000.mali/min_clock
+
 
     chown radio system /sys/devices/system/sec_os_ctrl/migrate_os
     chmod 664 /sys/devices/system/sec_os_ctrl/migrate_os
