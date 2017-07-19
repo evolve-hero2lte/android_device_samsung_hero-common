@@ -43,6 +43,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	net.tcp.default_init_rwnd=60
 
+# IMS
+PRODUCT_PROPERTY_OVERRIDES += \
+	persist.volte_enabled_by_hw=1 \
+	persist.data.iwlan.enable=true
+
 # sdcardfs
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.sys.sdcardfs=true

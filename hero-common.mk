@@ -98,8 +98,7 @@ PRODUCT_PACKAGES += \
 	libsamsung_symbols \
 	SamsungServiceMode \
 	Torch \
-	SamsungDoze \
-	FlipFlap
+	SamsungDoze
 
 ###########################################################
 ### DTB TOOL
