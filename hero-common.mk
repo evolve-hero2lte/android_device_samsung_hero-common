@@ -73,9 +73,14 @@ PRODUCT_PACKAGES += \
     libion \
     libfimg
 
+# Camera
+PRODUCT_PACKAGES += \
+	camera.exynos5 \
+    Snap
+
 # hardware/samsung/AdvancedDisplay (MDNIE)
 PRODUCT_PACKAGES += \
-    AdvancedDisplay
+	SamsungDoze
 
 # Radio
 PRODUCT_PACKAGES += \

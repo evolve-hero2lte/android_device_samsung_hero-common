@@ -53,9 +53,13 @@ public class SlteRIL extends RIL {
 
     private static final int RIL_UNSOL_DEVICE_READY_NOTI = 11008;
     private static final int RIL_UNSOL_AM = 11010;
+    private static final int RIL_UNSOL_DUN_PIN_CONTROL_SIGNAL = 11011;
+    private static final int RIL_UNSOL_DATA_SUSPEND_RESUME = 11012;
     private static final int RIL_UNSOL_SIM_PB_READY = 11021;
+    private static final int RIL_UNSOL_SIM_SWAP_STATE_CHANGED = 11057;
 
     private static final int RIL_UNSOL_WB_AMR_STATE = 20017;
+    private static final int RIL_UNSOL_SNDMGR_CLOCK_CTRL = 20022;
 
     // Number of per-network elements expected in QUERY_AVAILABLE_NETWORKS's response.
     // 4 elements is default, but many RILs actually return 5, making it impossible to
@@ -415,13 +419,17 @@ public class SlteRIL extends RIL {
         /* Remap incorrect respones or ignore them */
         switch (origResponse) {
             case RIL_UNSOL_STK_CALL_CONTROL_RESULT:
-            case RIL_UNSOL_WB_AMR_STATE:
+            case RIL_UNSOL_WB_AMR_STATE: /* Wideband AMR callback */
+            case RIL_UNSOL_SNDMGR_CLOCK_CTRL: /* Wideband clock change */
             case RIL_UNSOL_DEVICE_READY_NOTI: /* Registrant notification */
             case RIL_UNSOL_SIM_PB_READY: /* Registrant notification */
                 Rlog.v(RILJ_LOG_TAG,
                        "XMM7260: ignoring unsolicited response " +
                        origResponse);
                 return;
+            case RIL_UNSOL_SIM_SWAP_STATE_CHANGED:
+                newResponse = RIL_UNSOL_RESPONSE_SIM_STATUS_CHANGED;
+                break;
         }
 
         if (newResponse != origResponse) {
@@ -435,8 +443,12 @@ public class SlteRIL extends RIL {
             case RIL_UNSOL_AM:
                 ret = responseString(p);
                 break;
+            case RIL_UNSOL_DATA_SUSPEND_RESUME:
             case RIL_UNSOL_STK_SEND_SMS_RESULT:
                 ret = responseInts(p);
+                break;
+            case RIL_UNSOL_DUN_PIN_CONTROL_SIGNAL:
+                ret = responseVoid(p);
                 break;
             default:
                 // Rewind the Parcel
