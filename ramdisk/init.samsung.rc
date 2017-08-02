@@ -44,52 +44,83 @@ on init
     chmod 0664 /dev/stune/system-background/tasks
     
     write /proc/sys/kernel/sched_compat_yield 1
-
+### DEFAULT
     # Create cgroup mount points for process groups
     mkdir /dev/cpuctl
-    mount cgroup none /dev/cpuctl cpu
+    chmod 0666 /dev/cpuctl
+    mount cgroup system /dev/cpuctl cpu
     chown system system /dev/cpuctl
     chown system system /dev/cpuctl/tasks
     chmod 0666 /dev/cpuctl/tasks
     write /dev/cpuctl/cpu.shares 1024
     write /dev/cpuctl/cpu.rt_runtime_us 800000
     write /dev/cpuctl/cpu.rt_period_us 1000000
-
+### BG_NONINTERACTIVE
     mkdir /dev/cpuctl/bg_non_interactive
+    chown system system /dev/cpuctl/bg_non_interactive
+    chmod 0666 /dev/cpuctl/bg_non_interactive
     chown system system /dev/cpuctl/bg_non_interactive/tasks
     chmod 0666 /dev/cpuctl/bg_non_interactive/tasks
     # 5.0 %
     write /dev/cpuctl/bg_non_interactive/cpu.shares 52
     write /dev/cpuctl/bg_non_interactive/cpu.rt_runtime_us 700000
     write /dev/cpuctl/bg_non_interactive/cpu.rt_period_us 1000000
-
-    mkdir /dev/cpuctl/bg_cached
-    chown system system /dev/cpuctl/bg_cached/tasks
-    chown system system /dev/cpuctl/bg_cached/cpu.cfs_period_us
-    chown system system /dev/cpuctl/bg_cached/cpu.cfs_quota_us
-    chmod 0666 /dev/cpuctl/bg_cached/tasks
-    chmod 0664 /dev/cpuctl/bg_cached/cpu.cfs_period_us
-    chmod 0664 /dev/cpuctl/bg_cached/cpu.cfs_quota_us
+### FOREGROUND
+    mkdir /dev/cpuctl/fg_foreground
+    chown system system /dev/cpuctl/fg_foreground/tasks
+    chown system system /dev/cpuctl/fg_foreground/cpu.cfs_period_us
+    chown system system /dev/cpuctl/fg_foreground/cpu.cfs_quota_us
+    chmod 0666 /dev/cpuctl/fg_foreground/tasks
+    chmod 0664 /dev/cpuctl/fg_foreground/cpu.cfs_period_us
+    chmod 0664 /dev/cpuctl/fg_foreground/cpu.cfs_quota_us
     # 5.0 %
-    write /dev/cpuctl/bg_cached/cpu.shares 52
-    write /dev/cpuctl/bg_cached/cpu.rt_runtime_us 700000
-    write /dev/cpuctl/bg_cached/cpu.rt_period_us 1000000
-    write /dev/cpuctl/bg_cached/cpu.cfs_period_us 20000
-    write /dev/cpuctl/bg_cached/cpu.cfs_quota_us 10000
-
-    mkdir /dev/cpuctl/bg_abnormal
-    chown system system /dev/cpuctl/bg_abnormal/tasks
-    chown system system /dev/cpuctl/bg_abnormal/cpu.cfs_period_us
-    chown system system /dev/cpuctl/bg_abnormal/cpu.cfs_quota_us
-    chmod 0666 /dev/cpuctl/bg_abnormal/tasks
-    chmod 0664 /dev/cpuctl/bg_abnormal/cpu.cfs_period_us
-    chmod 0664 /dev/cpuctl/bg_abnormal/cpu.cfs_quota_us
+    write /dev/cpuctl/fg_foreground/cpu.shares 52
+    write /dev/cpuctl/fg_foreground/cpu.rt_runtime_us 700000
+    write /dev/cpuctl/fg_foreground/cpu.rt_period_us 1000000
+    write /dev/cpuctl/fg_foreground/cpu.cfs_period_us 20000
+    write /dev/cpuctl/fg_foreground/cpu.cfs_quota_us 10000
+### AUDIO_APP
+    mkdir /dev/cpuctl/audio-app
+    chown system system /dev/cpuctl/aa_audio-app/tasks
+    chown system system /dev/cpuctl/aa_audio-app/cpu.cfs_period_us
+    chown system system /dev/cpuctl/aa_audio-app/cpu.cfs_quota_us
+    chmod 0666 /dev/cpuctl/aa_audio-app/tasks
+    chmod 0664 /dev/cpuctl/aa_audio-app/cpu.cfs_period_us
+    chmod 0664 /dev/cpuctl/aa_audio-app/cpu.cfs_quota_us
+    # 5.0 %
+    write /dev/cpuctl/aa_audio-app/cpu.shares 52
+    write /dev/cpuctl/aa_audio-app/cpu.rt_runtime_us 700000
+    write /dev/cpuctl/aa_audio-app/cpu.rt_period_us 1000000
+    write /dev/cpuctl/aa_audio-app/cpu.cfs_period_us 20000
+    write /dev/cpuctl/aa_audio-app/cpu.cfs_quota_us 10000
+### AUDIO_SYS
+    mkdir /dev/cpuctl/as_audio-sys
+    chown system system /dev/cpuctl/as_audio-sys/tasks
+    chown system system /dev/cpuctl/as_audio-sys/cpu.cfs_period_us
+    chown system system /dev/cpuctl/as_audio-sys/cpu.cfs_quota_us
+    chmod 0666 /dev/cpuctl/as_audio-sys/tasks
+    chmod 0664 /dev/cpuctl/as_audio-sys/cpu.cfs_period_us
+    chmod 0664 /dev/cpuctl/as_audio-sys/cpu.cfs_quota_us
     # 5.0 %
     write /dev/cpuctl/bg_abnormal/cpu.shares 52
     write /dev/cpuctl/bg_abnormal/cpu.rt_runtime_us 700000
     write /dev/cpuctl/bg_abnormal/cpu.rt_period_us 1000000
     write /dev/cpuctl/bg_abnormal/cpu.cfs_period_us 20000
     write /dev/cpuctl/bg_abnormal/cpu.cfs_quota_us 10000
+### TOP_APP
+    mkdir /dev/cpuctl/ta_top-app
+    chown system system /dev/cpuctl/ta_top-app/tasks
+    chown system system /dev/cpuctl/ta_top-app/cpu.cfs_period_us
+    chown system system /dev/cpuctl/ta_top-app/cpu.cfs_quota_us
+    chmod 0666 /dev/cpuctl/ta_top-app/tasks
+    chmod 0664 /dev/cpuctl/ta_top-app/cpu.cfs_period_us
+    chmod 0664 /dev/cpuctl/ta_top-app/cpu.cfs_quota_us
+    # 5.0 %
+    write /dev/cpuctl/ta_top-app/cpu.shares 52
+    write /dev/cpuctl/ta_top-app/cpu.rt_runtime_us 700000
+    write /dev/cpuctl/ta_top-app/cpu.rt_period_us 1000000
+    write /dev/cpuctl/ta_top-app/cpu.cfs_period_us 20000
+    write /dev/cpuctl/ta_top-app/cpu.cfs_quota_us 10000
 
     # sets up initial cpusets for ActivityManager
     mkdir /dev/cpuset
@@ -103,6 +134,9 @@ on init
     mkdir /dev/cpuset/foreground
     write /dev/cpuset/foreground/cpus 0-2,4-7
     write /dev/cpuset/foreground/mems 0
+    mkdir /dev/cpuset/foreground/boost
+    write /dev/cpuset/foreground/boost/cpus 4-7
+    write /dev/cpuset/foreground/boost/mems 0
     mkdir /dev/cpuset/background
     write /dev/cpuset/background/cpus 0-1
     write /dev/cpuset/background/mems 0
@@ -127,6 +161,7 @@ on init
     chown system system /dev/cpuset
     chown system system /dev/cpuset/top-app
     chown system system /dev/cpuset/foreground
+    chown system system /dev/cpuset/foreground/boost
     chown system system /dev/cpuset/background
     chown system system /dev/cpuset/system-background
     chown system system /dev/cpuset/cached
@@ -135,6 +170,7 @@ on init
     chown system system /dev/cpuset/tasks
     chown system system /dev/cpuset/top-app/tasks
     chown system system /dev/cpuset/foreground/tasks
+    chown system system /dev/cpuset/foreground/boost/tasks
     chown system system /dev/cpuset/background/tasks
     chown system system /dev/cpuset/system-background/tasks
     chown system system /dev/cpuset/cached/tasks
@@ -154,6 +190,7 @@ on init
 
     chmod 0664 /dev/cpuset/top-app/tasks
     chmod 0664 /dev/cpuset/foreground/tasks
+    chmod 0664 /dev/cpuset/foreground/boost/tasks
     chmod 0664 /dev/cpuset/background/tasks
     chmod 0664 /dev/cpuset/system-background/tasks
     chmod 0664 /dev/cpuset/cached/tasks
@@ -366,31 +403,7 @@ on boot
     chown system system /sys/class/sec/tsp/comm_err_count
     chown system system /sys/class/sec/tsp/module_id
 
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_slack
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_slack
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/target_loads
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/target_loads
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boost
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boost
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/input_boost
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/input_boost
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-
-    # Change permission for dvfshelper
+# Change permission for dvfshelper
     chown radio system /sys/power/cpufreq_table
     chmod 0664 /sys/power/cpufreq_table
     chown radio system /sys/power/cpufreq_min_limit
@@ -563,10 +576,6 @@ on boot
     # usb hw param
     chown system usb /sys/class/usb_notify/usb_control/usb_hw_param
     chmod 0664 /sys/class/usb_notify/usb_control/usb_hw_param
-
-    # Assume SMP uses shared cpufreq policy for all CPUs
-    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 
     chown system system /sys/class/timed_output/vibrator/intensity
     chown system system /sys/class/timed_output/vibrator/multi_freq
