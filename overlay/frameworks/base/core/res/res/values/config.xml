@@ -312,6 +312,10 @@
          The default is false. -->
     <bool name="config_suspendWhenScreenOffDueToProximity">true</bool>
     
-        <!-- Allow user to change button brightness. -->
+    <!-- Allow user to change button brightness. -->
     <bool name="config_deviceHasVariableButtonBrightness">true</bool>
+
+    <!-- If enabled, capacitive keys will only light up when pressed.
+         Otherwise, the buttons will light up whenever the user interacts with the device -->
+    <bool name="config_buttonLightOnKeypressOnly">true</bool>
 </resources>
