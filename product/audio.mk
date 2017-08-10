@@ -1,10 +1,13 @@
 DEVICE_PATH := device/samsung/hero-common
 
-# Audio
+# Configs
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/audio/audio_policy.conf:system/etc/audio_policy.conf \
-    $(LOCAL_PATH)/configs/audio/mixer_paths_0.xml:system/etc/mixer_paths_0.xml
+	$(DEVICE_PATH)/configs/audio/audio_policy.conf:system/etc/audio_policy.conf \
+	$(DEVICE_PATH)/configs/audio/audio_effects.conf:system/etc/audio_effects.conf \
+	$(DEVICE_PATH)/configs/audio/mixer_gains.xml:system/etc/mixer_gains.xml \
+	$(DEVICE_PATH)/configs/audio/mixer_paths.xml:system/etc/mixer_paths.xml
 
+# Packages
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
