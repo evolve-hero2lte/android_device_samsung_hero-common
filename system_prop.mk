@@ -1,18 +1,47 @@
-#
-# Copyright (C) 2017 Fernando Von Arx <fer.vonarx@gmail.com>
-# Copyright (C) 2017 Jesse Chan <cjx123@outlook.com>
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
+# Audio
+PRODUCT_PROPERTY_OVERRIDES += \
+	af.fast_track_multiplier=1 \
+	audio_hal.force_voice_config=wide
 
+# Bluetooth
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.bt.bdaddr_path="/efs/bluetooth/bt_addr"
+
+# Bluetooth workaround:
+# The new CAF code defaults to MCT HAL, but we
+# need the old H4 HAL for our Broadcom WiFi.
+PRODUCT_PROPERTY_OVERRIDES += \
+	qcom.bluetooth.soc=rome
+	
+# Graphics
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.bq.gpu_to_cpu_unsupported=1 \
+	ro.opengles.version=196609 \
+	debug.hwc.force_gpu=1 \
+	ro.bq.gpu_to_cpu_unsupported=1 \
+	ro.opengles.version=196609 \
+	ro.sf.lcd_density=560	
+
+# NFC
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.nfc.sec_hal=true \
+	ro.nfc.port="I2C"	
+	
+# RIL
+PRODUCT_PROPERTY_OVERRIDES += \
+	persist.radio.add_power_save=1 \
+	persist.radio.apm_sim_not_pwdn=1 \
+	rild.libpath=/system/lib64/libsec-ril.so \
+	rild.libpath2=/system/lib64/libsec-ril-dsds.so \
+	ro.telephony.default_network=9 \
+	ro.telephony.ril_class=SlteRIL \
+	ro.telephony.mms_data_profile=5 \
+	ro.ril.gprsclass=10 \
+	ro.ril.hsxpa=1 \
+	ro.ril.telephony.mqanelements=6 \
+	telephony.lteOnGsmDevice=1 \
+	telephony.lteOnCdmaDevice=0
+	
 # Dalvik/Art
 PRODUCT_PROPERTY_OVERRIDES += \
 	dalvik.vm.heapstartsize=8m \
@@ -42,7 +71,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Define default initial receive window size in segments.
 PRODUCT_PROPERTY_OVERRIDES += \
 	net.tcp.default_init_rwnd=60
-
+	
 # sdcardfs
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.sys.sdcardfs=true
