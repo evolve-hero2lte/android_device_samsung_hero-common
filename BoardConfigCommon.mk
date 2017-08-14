@@ -77,7 +77,7 @@ TARGET_SEC_FP_HAL_VARIANT := bauth
 
 # Hardware
 BOARD_HARDWARE_CLASS += hardware/samsung/cmhw
-BOARD_HARDWARE_CLASS += device/samsung/hero-common/cmhw
+BOARD_HARDWARE_CLASS += $(LOCAL_PATH)/cmhw
 
 # Camera
 BOARD_USE_SAMSUNG_CAMERAFORMAT_NV21 := true
@@ -162,7 +162,7 @@ BOARD_MODEM_TYPE := ss333
 BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril
 
 # Properties
-TARGET_SYSTEM_PROP := device/samsung/hero-common/system.prop
+TARGET_SYSTEM_PROP := $(LOCAL_PATH)/system.prop
 
 # Recovery
 BOARD_HAS_NO_SELECT_BUTTON := true
