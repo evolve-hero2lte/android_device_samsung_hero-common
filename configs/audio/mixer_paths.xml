@@ -1435,11 +1435,11 @@
 	</path>
 
 	<path name="gain-recording-mic">
-		<path name="media-mic" />
+		<path name="main-mic" />
 	</path>
 
 	<path name="recording-headset-mic">
-		<path name="media-headset-mic" />
+		<path name="main-mic" />
 	</path>
 
 	<path name="recording-headphone-mic">
