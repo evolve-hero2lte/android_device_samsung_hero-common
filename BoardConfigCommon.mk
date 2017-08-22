@@ -138,6 +138,9 @@ GREEN_LED_PATH := "/sys/class/leds/led_g/brightness"
 BLUE_LED_PATH := "/sys/class/leds/led_b/brightness"
 BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 
+# Lockscreen charging info: real time values
+BOARD_GLOBAL_CFLAGS += -DBATTERY_REAL_INFO
+
 # RIL
 BOARD_VENDOR := samsung
 BOARD_MODEM_TYPE := ss333
