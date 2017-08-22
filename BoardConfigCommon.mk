@@ -150,6 +150,9 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 TARGET_SCREEN_HEIGHT := 2048
 TARGET_SCREEN_WIDTH := 1536
 
+# Lockscreen charging info: real time values
+BOARD_GLOBAL_CFLAGS += -DBATTERY_REAL_INFO
+
 # Properties
 TARGET_SYSTEM_PROP := device/samsung/hero-common/system.prop
 
