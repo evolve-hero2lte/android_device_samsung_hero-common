@@ -1,7 +1,7 @@
 <mixer>
 	<pcmdai playback_link="6"/>
 	<pcmdai playback_jam_link="7"/>
-	<pcmdai playback_deep_link="8"/>
+	<pcmdai playback_deep_link="3"/>
 	<pcmdai playback_offload_link="11"/>
 	<pcmdai capture_link="0"/>
 	<pcmdai baseband_link="1"/>
