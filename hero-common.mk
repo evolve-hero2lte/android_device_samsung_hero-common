@@ -97,6 +97,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	libsamsung_symbols \
 	SamsungServiceMode \
+        SamsungDoze \
 	Torch
 
 ###########################################################
