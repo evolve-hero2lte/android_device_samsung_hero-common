@@ -11,6 +11,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     fstab.samsungexynos8890 \
     init.baseband.rc \
+    init.baseband.sh \
     init.bluetooth.rc \
     init.gps.rc \
     init.power.rc \

@@ -71,16 +71,15 @@ on property:ro.multisim.simslotcount=1
 on property:ro.multisim.simslotcount=2
     setprop persist.radio.multisim.config dsds
 
-# Parse hardware revision (needs to happen before cbd starts)
-service modemloader /system/bin/modemloader
-    class core
+service init_baseband /init.baseband.sh
+    class boot
+    user root
+    group root
+    seclabel u:r:init:s0
     oneshot
 
-service cpboot-daemon /system/bin/cbd -d -tss310 -bm -mm -P platform/155a0000.ufs/by-name/RADIO
+service cpboot-daemon /bin/cbd -d -tss310 -bm -mm -P platform/155a0000.ufs/by-name/RADIO
     class main
     user root
     group radio cache inet misc audio sdcard_rw log sdcard_r shell
-    disabled
-
-on property:ro.modemloader.done=1
-    start cpboot-daemon
+    seclabel u:r:cbd:s0
