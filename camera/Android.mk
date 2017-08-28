@@ -7,7 +7,7 @@ LOCAL_SRC_FILES := \
     Camera3Wrapper.cpp
 
 LOCAL_SHARED_LIBRARIES := \
-    libhardware liblog libcamera_client libutils libcutils
+    libhardware liblog libcamera_client libarect libutils libcutils
 
 LOCAL_C_INCLUDES += \
     system/core/include \
@@ -17,5 +17,6 @@ LOCAL_MODULE_RELATIVE_PATH := hw
 
 LOCAL_MODULE := camera.$(TARGET_BOARD_PLATFORM)
 LOCAL_MODULE_TAGS := optional
+LOCAL_STATIC_LIBRARIES        := libbase
 
 include $(BUILD_SHARED_LIBRARY)

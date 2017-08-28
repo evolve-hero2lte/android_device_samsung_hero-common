@@ -91,43 +91,9 @@
     <!-- The default iface on which to monitor data use -->
     <string name="config_datause_iface" translatable="false">rmnet4</string>
 
-    <!-- The RadioAccessFamilies supported by the device.
-         Empty is viewed as "all".  Only used on devices which
-         don't support RIL_REQUEST_GET_RADIO_CAPABILITY
-         format is UMTS|LTE|... -->
-    <string translatable="false" name="config_radio_access_family">GSM | WCDMA | LTE</string>
-
     <!-- ############################################################## -->
     <!-- ### HARDWARE KEYS                                              -->
     <!-- ############################################################## -->
-
-    <!-- Hardware keys present on the device, stored as a bit field.
-         This integer should equal the sum of the corresponding value for each
-         of the following keys present:
-             1 - Home
-             2 - Back
-             4 - Menu
-             8 - Assistant (search)
-            16 - App switch
-            32 - Camera
-            64 - Volume rocker
-         For example, a device with Home, Back and Menu keys would set this
-         config to 7. -->
-    <integer name="config_deviceHardwareKeys">83</integer>
-
-    <!-- Hardware keys present on the device with the ability to wake, stored as a bit field.
-         This integer should equal the sum of the corresponding value for each
-         of the following keys present:
-             1 - Home
-             2 - Back
-             4 - Menu
-             8 - Assistant (search)
-            16 - App switch
-            32 - Camera
-            64 - Volume rocker
-         For example, a device with Home, Back and Menu keys would set this
-         config to 7. -->
-    <integer name="config_deviceHardwareWakeKeys">65</integer>
 
     <!-- Control the behavior when the user long presses the home button.
             0 - Nothing
@@ -217,14 +183,6 @@
          that can be set by the user. -->
     <integer name="config_screenBrightnessDim">10</integer>
 
-    <!-- Is the notification LED intrusive? Used to decide if there should be a disable option -->
-    <bool name="config_intrusiveNotificationLed">true</bool>
-
-    <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
-    <bool name="config_intrusiveBatteryLed">true</bool>
-
-    <!-- Boolean to enable stk functionality on Samsung phones -->
-    <bool name="config_samsung_stk">true</bool>
 
     <!-- Screen brightness used to dim the screen while dozing in a very low power state.
          May be less than the minimum allowed brightness setting
@@ -252,14 +210,6 @@
     <!-- The device supports freeform window management -->
     <bool name="config_freeformWindowManagement">true</bool>
 
-    <!-- Flag indicating whether strict threshold is used, or lenient threshold is used,
-            when evaluating RSRP for LTE antenna bar display
-           0. Strict threshold
-           1. Lenient threshold
-           2. Custom threshold
-    -->
-    <integer name="config_LTE_RSRP_threshold_type">2</integer>
-
     <!-- For performance and storage reasons, limit the number of fingerprints per user -->
     <integer name="config_fingerprintMaxTemplatesPerUser">4</integer>
 
@@ -277,16 +227,4 @@
 
     <!-- Boolean indicating if current platform supports BLE peripheral mode -->
     <bool name="config_bluetooth_le_peripheral_mode_supported">true</bool>
-
-    <!-- If enabled, capacitive keys will only light up when pressed.
-         Otherwise, the buttons will light up whenever the user interacts with the device -->
-    <bool name="config_buttonLightOnKeypressOnly">true</bool>
-
-    <!-- Whether notify fingerprint client of successful cancelled authentication -->
-    <bool name="config_notifyClientOnFingerprintCancelSuccess">true</bool>
-
-    <!-- Certain sensor firmwares break with having a batch
-         size set. By setting this to false, devices can opt
-         out of setting a batch size, which fixes rotation. -->
-    <bool name="config_useDefaultBatchingForAccel">false</bool>
 </resources>

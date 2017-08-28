@@ -66,22 +66,47 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 # A list of dpis to select prebuilt apk, in precedence order.
 PRODUCT_AAPT_PREBUILT_DPI := xxhdpi xhdpi hdpi
 
+# Graphics
 PRODUCT_PACKAGES += \
-    gralloc.exynos5
+    libhwc2on1adapter \
+    android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.allocator@2.0-service \
+    android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.mapper@2.0-impl
 
+# RenderScript HAL
 PRODUCT_PACKAGES += \
-    libion \
-    libfimg
+    android.hardware.renderscript@1.0-impl
+
+# DRM
+PRODUCT_PACKAGES += \
+    android.hardware.drm@1.0-impl
+
+# Memory
+PRODUCT_PACKAGES += \
+    android.hardware.ir@1.0-impl
+
+# Memory
+PRODUCT_PACKAGES += \
+    android.hardware.memtrack@1.0-impl 
+
+# Manifest
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/manifest.xml:system/vendor/manifest.xml
+
+# Bluetooth HAL
+PRODUCT_PACKAGES += \
+    android.hardware.bluetooth@1.0-impl
 
 # Camera
 PRODUCT_PACKAGES += \
-    camera.exynos5 \
-    Snap
+    camera.device@3.2-impl \
+    android.hardware.camera.provider@2.4-impl
 
 # hardware/samsung/AdvancedDisplay (MDNIE)
-PRODUCT_PACKAGES += \
-    SamsungDoze \
-    AdvancedDisplay
+#PRODUCT_PACKAGES += \
+#    SamsungDoze \
+#    AdvancedDisplay
 
 # Radio
 PRODUCT_PACKAGES += \
@@ -89,10 +114,12 @@ PRODUCT_PACKAGES += \
     libprotobuf-cpp-full
 
 PRODUCT_PACKAGES += \
+    android.hardware.radio@1.0 \
+    android.hardware.radio.deprecated@1.0 \
     libsecril-client \
     libsecril-client-sap \
     modemloader
-
+	
 PRODUCT_PACKAGES += \
     SamsungServiceMode
 
@@ -105,14 +132,21 @@ PRODUCT_PACKAGES += \
 # WiFi
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
-    $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
+    $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
+    $(LOCAL_PATH)/configs/wifi/filter_ie:system/etc/wifi/filter_ie
 
 PRODUCT_PACKAGES += \
+    android.hardware.wifi@1.0-service \
     macloader \
-    wifiloader \
     hostapd \
     libwpa_client \
-    wpa_supplicant
+    wpa_supplicant \
+    wificond \
+    wifiloader \
+    wifilogd \
+    wpa_supplicant.conf \
+    wlutil \
+
 
 # external/wpa_supplicant_8/wpa_supplicant/wpa_supplicant_conf.mk
 PRODUCT_PACKAGES += \
@@ -139,7 +173,9 @@ PRODUCT_PACKAGES += \
     audio.usb.default \
     audio.r_submix.default \
     audio.primary.universal8890 \
-    libtinycompress
+    libtinycompress \
+    android.hardware.audio@2.0-impl \
+    android.hardware.audio.effect@2.0-impl
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -148,6 +184,10 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml  \
     $(LOCAL_PATH)/configs/media/media_codecs.xml:system/etc/media_codecs.xml \
     $(LOCAL_PATH)/configs/media/media_profiles.xml:system/etc/media_profiles.xml
+
+# Network
+PRODUCT_PACKAGES += \
+    netutils-wrapper-1.0
 
 # GPS
 PRODUCT_COPY_FILES += \
@@ -167,9 +207,14 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/idc/Synaptics_RMI4_TouchPad_Sensor.idc:system/usr/idc/Synaptics_RMI4_TouchPad_Sensor.idc \
     $(LOCAL_PATH)/configs/idc/sec_touchscreen.idc:system/usr/idc/sec_touchscreen.idc
 
+# Sensorhub
+PRODUCT_PACKAGES += \
+    android.hardware.sensors@1.0-impl
+
 # Power
 PRODUCT_PACKAGES += \
-    power.universal8890
+	power.exynos5 \
+	android.hardware.power@1.0-impl
 
 # Lights
 PRODUCT_PACKAGES += \
