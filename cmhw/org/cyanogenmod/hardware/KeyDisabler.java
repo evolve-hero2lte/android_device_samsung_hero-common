@@ -36,11 +36,17 @@ public class KeyDisabler {
     }
 
     public static boolean isActive() {
-        return (FileUtils.readOneLine(CONTROL_PATH).equals("0"));
+        if (KeyDisabler.isSupported()) {
+            return FileUtils.readOneLine(CONTROL_PATH).equals("0");
+        }
+        return true;
     }
 
     public static boolean setActive(boolean state) {
-        return FileUtils.writeLine(CONTROL_PATH, (state ? "0" : "1"));
+        if (KeyDisabler.isSupported()) {
+            return FileUtils.writeLine(CONTROL_PATH, (state ? "0" : "1"));
+        }
+        return false;
     }
 
 }

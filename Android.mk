@@ -1,4 +1,5 @@
 #
+#
 # Copyright (C) 2016 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +19,6 @@ LOCAL_PATH := $(call my-dir)
 
 ifneq ($(filter exynos8890, $(TARGET_SOC)),)
 
-include $(call all-makefiles-under,$(LOCAL_PATH))
+include $(call all-subdir-makefiles,$(LOCAL_PATH))
 
 endif

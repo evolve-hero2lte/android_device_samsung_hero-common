@@ -1,25 +1,31 @@
-# Packages
+#
+# Copyright (C) 2016 The CyanogenMod Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# Graphics
 PRODUCT_PACKAGES += \
-	libion_exynos \
-	libfimg
-#	libion
-#	gralloc.exynos5
+    libhwc2on1adapter \
+    android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.allocator@2.0-service \
+    android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.mapper@2.0-impl
 
-# Permissions
-PRODUCT_COPY_FILES += \
-	frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:system/etc/permissions/android.hardware.vulkan.level.xml \
-	frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:system/etc/permissions/android.hardware.vulkan.version.xml
+# RenderScript HAL
+PRODUCT_PACKAGES += \
+    android.hardware.renderscript@1.0-impl
 
-# Properties
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.bq.gpu_to_cpu_unsupported=1 \
-	ro.opengles.version=196609 \
-	debug.hwc.force_gpu=1 \
-	ro.bq.gpu_to_cpu_unsupported=1 \
-	ro.opengles.version=196609 \
-	ro.sf.lcd_density=560
-
-# Properties - HWC - not used on cm/aosp
-PRODUCT_PROPERTY_OVERRIDES += \
-	debug.hwc.winupdate=1 \
-	debug.hwc.otf=1
+# DRM
+PRODUCT_PACKAGES += \
+    android.hardware.drm@1.0-impl
