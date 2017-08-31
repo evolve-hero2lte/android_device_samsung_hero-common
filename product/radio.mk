@@ -22,6 +22,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	rild.libpath=/system/lib64/libsec-ril.so \
 	rild.libpath2=/system/lib64/libsec-ril-dsds.so \
 	ro.telephony.default_network=9 \
+        ro.telephony.mms_data_profile=5 \
 	ro.telephony.ril_class=SlteRIL \
 	ro.ril.gprsclass=10 \
 	ro.ril.hsxpa=1 \
