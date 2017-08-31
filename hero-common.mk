@@ -18,20 +18,14 @@ DEVICE_PACKAGE_OVERLAYS += device/samsung/hero-common/overlay
 
 LOCAL_PATH := device/samsung/hero-common
 
-###########################################################
-### RAMDISK
-###########################################################
-
+# Ramdisk
 PRODUCT_PACKAGES += \
 	fstab.samsungexynos8890 \
 	init.samsung.rc \
 	init.samsungexynos8890.rc \
 	ueventd.samsungexynos8890.rc \
 
-###########################################################
-### PERMISSONS
-###########################################################
-
+# Permissions
 PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
 	frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
@@ -42,10 +36,7 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/com.nxp.mifare.xml:system/etc/permissions/com.nxp.mifare.xml \
 	frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
-###########################################################
-### GRAPHICS
-###########################################################
-
+# Graphics
 # This device is xhdpi.  However the platform doesn't
 # currently contain all of the bitmaps at xhdpi density so
 # we do this little trick to fall back to the hdpi version
@@ -59,51 +50,33 @@ PRODUCT_AAPT_PREBUILT_DPI := xxxhdpi xxhdpi xhdpi hdpi
 TARGET_SCREEN_HEIGHT := 2560
 TARGET_SCREEN_WIDTH := 1440
 
-###########################################################
-### POWER
-###########################################################
-
+# Power
 PRODUCT_PACKAGES += \
 	power.exynos5
 
-###########################################################
-### LIGHTS
-###########################################################
-
+# Lights
 PRODUCT_PACKAGES += \
 	lights.universal8890
 
-###########################################################
-### CHARGER
-###########################################################
-
+# Charger
 # Offmode charger
 # Use cm images if available, aosp ones otherwise
 PRODUCT_PACKAGES += \
 	charger_res_images \
 	cm_charger_res_images
 
-###########################################################
-### MOBICORE
-###########################################################
-
+# Mobicore
 PRODUCT_PACKAGES += \
 	keystore.exynos5
 
-###########################################################
-### PACKAGES
-###########################################################
-
+# Packages
 PRODUCT_PACKAGES += \
 	libsamsung_symbols \
 	SamsungServiceMode \
         SamsungDoze \
 	Torch
 
-###########################################################
-### DTB TOOL
-###########################################################
-
+# DTB Tool
 PRODUCT_PACKAGES += \
 	dtbhtoolExynos
 
