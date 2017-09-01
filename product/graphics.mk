@@ -19,6 +19,17 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.opengles.version=196609 \
         ro.sf.lcd_density=640
 
+# GPU
+PRODUCT_PROPERTY_OVERRIDES += \
+	debug.composition.type=dyn \
+	debug.hwc.max_hw_overlays=8 \
+	ro.opengles.version=196610 \
+	debug.sf.hw=0 \
+	persist.sys.ui.hw=0 \
+	video.accelerate.hw=1 \
+	debug.egl.profiler=1 \
+	debug.egl.hw=1
+
 # Properties - HWC - not used on cm/aosp
 PRODUCT_PROPERTY_OVERRIDES += \
 	debug.hwc.winupdate=1 \
