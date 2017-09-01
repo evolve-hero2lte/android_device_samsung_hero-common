@@ -34,3 +34,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	debug.hwc.winupdate=1 \
 	debug.hwc.otf=1
+
+# Surface
+PRODUCT_PROPERTY_OVERRIDES += \
+	persist.sys.scrollingcache=4 \
+	persist.sys.purgeable_assets=1 \
+	ro.compcache.default=18 \
+	ro.max.fling_velocity=12000 \
+	ro.min.fling_velocity=8000
