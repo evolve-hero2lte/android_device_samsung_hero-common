@@ -73,6 +73,14 @@ PRODUCT_PACKAGES += \
     libion \
     libfimg
 
+# Bluetooth
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/configs/bluetooth/av_performance.conf:system/etc/bluetooth/av_performance.conf \
+	$(LOCAL_PATH)/configs/bluetooth/bt_did.conf:system/etc/bluetooth/bt_did.conf \
+	$(LOCAL_PATH)/configs/bluetooth/bt_stack.conf:system/etc/bluetooth/bt_stack.conf \
+	$(LOCAL_PATH)/configs/bluetooth/iop_bt.db:system/etc/bluetooth/iop_bt.db \
+	$(LOCAL_PATH)/configs/bluetooth/iop_device_list.conf:system/etc/bluetooth/iop_device_list.conf
+
 # Camera
 PRODUCT_PACKAGES += \
     camera.exynos5 \
