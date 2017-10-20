@@ -23,7 +23,7 @@ public class VibratorHW {
     private static String LEVEL_PATH = "/sys/class/timed_output/vibrator/intensity";
 
     public static boolean isSupported() {
-        return true;
+        return FileUtils.isFileReadable(LEVEL_PATH) && FileUtils.isFileWritable(LEVEL_PATH);
     }
 
     public static int getMaxIntensity()  {
@@ -39,7 +39,11 @@ public class VibratorHW {
     }
 
     public static int getCurIntensity()  {
-        return Integer.parseInt(FileUtils.readOneLine(LEVEL_PATH));
+        if (FileUtils.isFileReadable(LEVEL_PATH)) {
+            String actualIntensity = FileUtils.readOneLine(LEVEL_PATH).replace("intensity: ", "");
+            return Integer.parseInt(actualIntensity) / 100;
+        }
+        return 0;
     }
 
     public static int getDefaultIntensity()  {
@@ -47,6 +51,9 @@ public class VibratorHW {
     }
 
     public static boolean setIntensity(int intensity)  {
-        return FileUtils.writeLine(LEVEL_PATH, String.valueOf(intensity));
+        if (FileUtils.isFileWritable(LEVEL_PATH)) {
+            return FileUtils.writeLine(LEVEL_PATH, String.valueOf(intensity));
+        }
+        return false;
     }
 }

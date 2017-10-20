@@ -26,13 +26,14 @@ using namespace std;
 /*
  * Macros
  */
-#define PROFILE_SCREEN_OFF          -1
-#define PROFILE_POWER_SAVE          0
-#define PROFILE_BALANCED            1
-#define PROFILE_HIGH_PERFORMANCE    2
-#define PROFILE_BIAS_POWER_SAVE     3
-#define PROFILE_BIAS_PERFORMANCE    4
-#define PROFILE_MAX_USABLE          5
+#define PROFILE_SCREEN_OFF            -2
+#define PROFILE_DREAMING_OR_DOZING    -1
+#define PROFILE_POWER_SAVE            0
+#define PROFILE_BALANCED              1
+#define PROFILE_HIGH_PERFORMANCE      2
+#define PROFILE_BIAS_POWER_SAVE       3
+#define PROFILE_BIAS_PERFORMANCE      4
+#define PROFILE_MAX_USABLE            5
 
 #define INPUT_STATE_DISABLE    0
 #define INPUT_STATE_ENABLE     1
@@ -78,9 +79,7 @@ static void power_set_interactive(struct power_module __unused * module, int on)
 /***********************************
  * Features
  */
-#ifdef LINEAGE_POWER_HAL
 static int power_get_feature(struct power_module *module __unused, feature_t feature);
-#endif
 static void power_set_feature(struct power_module *module, feature_t feature, int state);
 
 /***********************************
@@ -91,12 +90,12 @@ static bool pfwrite(string path, string str);
 static bool pfwrite(string path, bool flag);
 static bool pfwrite(string path, int value);
 static bool pfwrite(string path, unsigned int value);
-static bool pfwritegov(int cluster, string file, string str);
-static bool pfwritegov(int cluster, string file, bool flag);
-static bool pfwritegov(int cluster, string file, int value);
-static bool pfwritegov(int cluster, string file, unsigned int value);
+static bool pfwritegov(int core, string file, string str);
+static bool pfwritegov(int core, string file, bool flag);
+static bool pfwritegov(int core, string file, int value);
+static bool pfwritegov(int core, string file, unsigned int value);
 static bool pfread(string path, int *v);
-static bool pfread(string path, string str);
+static bool pfread(string path, string &str);
 
 // legacy I/O
 static bool pfwrite_legacy(string path, string str);

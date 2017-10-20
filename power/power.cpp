@@ -74,9 +74,7 @@ static int power_open(const hw_module_t __unused * module, const char *name, hw_
 
 			dev->init = power_init;
 			dev->powerHint = power_hint;
-#ifdef LINEAGE_POWER_HAL
 			dev->getFeature = power_get_feature;
-#endif
 			dev->setFeature = power_set_feature;
 			dev->setInteractive = power_set_interactive;
 
@@ -135,13 +133,11 @@ static void power_hint(struct power_module *module, power_hint_t hint, void *dat
 			power_set_profile(value ? PROFILE_POWER_SAVE : requested_power_profile);
 			break;
 
-#ifdef LINEAGE_POWER_HAL
 		case POWER_HINT_SET_PROFILE:
 			ALOGI("%s: hint(POWER_HINT_SET_PROFILE, %d, %llu)", __func__, value, (unsigned long long)data);
 			requested_power_profile = value;
 			power_set_profile(value);
 			break;
-#endif
 
 		case POWER_HINT_SUSTAINED_PERFORMANCE:
 		case POWER_HINT_VR_MODE:
@@ -152,27 +148,32 @@ static void power_hint(struct power_module *module, power_hint_t hint, void *dat
 
 			power_set_profile(value ? PROFILE_HIGH_PERFORMANCE : requested_power_profile);
 			break;
+
+#ifdef POWER_HAS_NEXUSOS_HINTS
+		case POWER_HINT_DREAMING_OR_DOZING:
+			ALOGI("%s: hint(POWER_HINT_DREAMING_OR_DOZING, %d, %llu)", __func__, value, (unsigned long long)data);
+			power_set_profile(value ? PROFILE_DREAMING_OR_DOZING : requested_power_profile);
+			break;
+#endif
 			
 		/***********************************
 		 * Boosting
 		 */
 		case POWER_HINT_INTERACTION:
-			ALOGI("%s: hint(POWER_HINT_INTERACTION, %d, %llu)", __func__, value, (unsigned long long)data);
+			// ALOGI("%s: hint(POWER_HINT_INTERACTION, %d, %llu)", __func__, value, (unsigned long long)data);
 
 			power_boostpulse(value ? value : 50000);
 			power_boostpulse(value ? value : 50000);
 
 			break;
 
-#ifdef LINEAGE_POWER_HAL
         case POWER_HINT_CPU_BOOST:
-			ALOGI("%s: hint(POWER_HINT_INTERACTION, %d, %llu)", __func__, value, (unsigned long long)data);
+			// ALOGI("%s: hint(POWER_HINT_CPU_BOOST, %d, %llu)", __func__, value, (unsigned long long)data);
 
 			power_boostpulse(value);
 			power_boostpulse(value);
 
 			break;
-#endif
 
 		/***********************************
 		 * Inputs
@@ -206,7 +207,7 @@ static void power_set_profile(int profile) {
 	current_power_profile = profile;
 
 	// apply settings
-	struct power_profile data = power_profiles[current_power_profile + 1];
+	struct power_profile data = power_profiles[current_power_profile + 2];
 
 	/*********************
 	 * CPU Cluster0
@@ -254,7 +255,7 @@ static void power_boostpulse(int duration) {
 		return;
 	}
 
-	ALOGD("%s: duration     = %d", __func__, duration);
+	// ALOGD("%s: duration     = %d", __func__, duration);
 
 	if (duration > 0) {
 		pfwritegov(0, "boostpulse_duration", duration);
@@ -275,10 +276,12 @@ static void power_input_device_state(int state) {
 	pfread(POWER_DT2W_ENABLED, &dt2w_sysfs);
 	pfread(POWER_CONFIG_ALWAYS_ON_FP, &always_on_fp);
 
+#if LOG_NDEBUG
 	ALOGD("%s: state         = %d", __func__, state);
 	ALOGD("%s: dt2w          = %d", __func__, dt2w);
 	ALOGD("%s: dt2w_sysfs    = %d", __func__, dt2w_sysfs);
 	ALOGD("%s: always_on_fp  = %d", __func__, always_on_fp);
+#endif
 
 	switch (state) {
 		case INPUT_STATE_DISABLE:
@@ -323,7 +326,10 @@ static void power_input_device_state(int state) {
 
 static void power_set_interactive(struct power_module __unused * module, int on) {
 	int screen_is_on = (on != 0);
+
+#if LOG_NDEBUG
 	ALOGD("%s: on = %d", __func__, on);
+#endif
 
 	if (!screen_is_on) {
 		power_set_profile(PROFILE_SCREEN_OFF);
@@ -337,7 +343,6 @@ static void power_set_interactive(struct power_module __unused * module, int on)
 /***********************************
  * Features
  */
-#ifdef LINEAGE_POWER_HAL
 static int power_get_feature(struct power_module *module __unused, feature_t feature) {
 	switch (feature) {
 		case POWER_FEATURE_SUPPORTED_PROFILES:
@@ -350,18 +355,17 @@ static int power_get_feature(struct power_module *module __unused, feature_t fea
 			return -EINVAL;
 	}
 }
-#endif
 
 static void power_set_feature(struct power_module *module, feature_t feature, int state) {
 	switch (feature) {
 		case POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
 			ALOGD("%s: set POWER_FEATURE_DOUBLE_TAP_TO_WAKE to \"%d\"", __func__, state);
 			if (state) {
-				pfwrite(POWER_CONFIG_DT2W, false);
+				pfwrite(POWER_CONFIG_DT2W, true);
 				pfwrite_legacy(POWER_DT2W_ENABLED, true);
 			} else {
 				pfwrite(POWER_CONFIG_DT2W, false);
-				pfwrite_legacy(POWER_DT2W_ENABLED, true);
+				pfwrite_legacy(POWER_DT2W_ENABLED, false);
 			}
 			break;
 
@@ -385,7 +389,10 @@ static bool pfwrite(string path, string str) {
 		return false;
 	}
 
+#if LOG_NDEBUG
 	ALOGI("%s: store \"%s\" to %s", __func__, str.c_str(), path.c_str());
+#endif
+
 	file << str;
 	file.close();
 
@@ -404,21 +411,12 @@ static bool pfwrite(string path, unsigned int value) {
 	return pfwrite(path, to_string(value));
 }
 
-static bool pfwritegov(int cluster, string file, string str) {
+static bool pfwritegov(int core, string file, string str) {
 	string cpugov;
 	ostringstream path;
 	ostringstream cpugov_path;
-	int policy_core;
 
-	if (cluster == 0) {
-		policy_core = 0;
-	} else if (cluster == 1) {
-		policy_core = 4;
-	} else {
-		return false;
-	}
-
-	path << "/sys/devices/system/cpu/cpu" << policy_core;
+	path << "/sys/devices/system/cpu/cpu" << core << "/cpufreq";
 	cpugov_path << path.str() << "/scaling_governor";
 
 	pfread(cpugov_path.str(), cpugov);
@@ -432,16 +430,16 @@ static bool pfwritegov(int cluster, string file, string str) {
 	return pfwrite(path.str(), str);
 }
 
-static bool pfwritegov(int cluster, string file, bool flag) {
-	return pfwritegov(cluster, file, flag ? 1 : 0);
+static bool pfwritegov(int core, string file, bool flag) {
+	return pfwritegov(core, file, flag ? 1 : 0);
 }
 
-static bool pfwritegov(int cluster, string file, int value) {
-	return pfwritegov(cluster, file, to_string(value));
+static bool pfwritegov(int core, string file, int value) {
+	return pfwritegov(core, file, to_string(value));
 }
 
-static bool pfwritegov(int cluster, string file, unsigned int value) {
-	return pfwritegov(cluster, file, to_string(value));
+static bool pfwritegov(int core, string file, unsigned int value) {
+	return pfwritegov(core, file, to_string(value));
 }
 
 static bool pfread(string path, int *v) {
@@ -464,7 +462,7 @@ static bool pfread(string path, int *v) {
 	return true;
 }
 
-static bool pfread(string path, string str) {
+static bool pfread(string path, string &str) {
 	ifstream file(path);
 
 	if (!file.is_open()) {
@@ -535,11 +533,7 @@ struct sec_power_module HAL_MODULE_INFO_SYM = {
 	.base = {
 		.common = {
 			.tag = HARDWARE_MODULE_TAG,
-#ifdef HAS_LAUNCH_HINT_SUPPORT
-			.module_api_version = POWER_MODULE_API_VERSION_0_6,
-#else
 			.module_api_version = POWER_MODULE_API_VERSION_0_5,
-#endif
 			.hal_api_version = HARDWARE_HAL_API_VERSION,
 			.id = POWER_HARDWARE_MODULE_ID,
 			.name = "Power HAL for Exynos 7420 SoCs",
@@ -549,9 +543,7 @@ struct sec_power_module HAL_MODULE_INFO_SYM = {
 
 		.init = power_init,
 		.powerHint = power_hint,
-#ifdef LINEAGE_POWER_HAL
 		.getFeature = power_get_feature,
-#endif
 		.setFeature = power_set_feature,
 		.setInteractive = power_set_interactive,
 	},
